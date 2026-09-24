@@ -1,0 +1,60 @@
+{
+  "name": "react-blogger-api",
+  "version": "0.1.0",
+  "description": "Fully-typed React hooks + Context wrapper for Google's Blogger API v3.",
+  "type": "module",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    },
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "dist"
+  ],
+  "engines": {
+    "bun": ">=1.4.0"
+  },
+  "scripts": {
+    "build": "bun run build:js && bun run build:types",
+    "build:js": "bun build ./src/index.ts --outdir dist --format esm --target browser --external react --external ky --external zod --sourcemap=linked",
+    "build:types": "tsc --project tsconfig.build.json",
+    "test": "bun test",
+    "typecheck": "tsc --noEmit",
+    "lint": "biome check .",
+    "format": "biome format --write ."
+  },
+  "peerDependencies": {
+    "react": ">=18.0.0"
+  },
+  "keywords": [
+    "react",
+    "react-hooks",
+    "blogger",
+    "google-blogger",
+    "blogger-api",
+    "context",
+    "hooks"
+  ],
+  "license": "MIT",
+  "publishConfig": {
+    "access": "public"
+  },
+  "dependencies": {
+    "ky": "^2.1.0",
+    "zod": "^4.6.5"
+  },
+  "devDependencies": {
+    "@biomejs/biome": "^2.5.14",
+    "@happy-dom/global-registrator": "^20.14.5",
+    "@testing-library/react": "^16.3.3",
+    "@types/react": "^19.3.0",
+    "@types/react-dom": "^19.3.0",
+    "bun-types": "^1.4.2",
+    "react-dom": "^19.3.0",
+    "typescript": "^7.0.2"
+  }
+}
