@@ -1,6 +1,6 @@
 {
   "name": "react-blogger-api",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Fully-typed React hooks + Context wrapper for Google's Blogger API v3.",
   "type": "module",
   "main": "./dist/index.js",
@@ -40,6 +40,14 @@
     "hooks"
   ],
   "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/itokun99/react-blogger-api.git"
+  },
+  "homepage": "https://github.com/itokun99/react-blogger-api#readme",
+  "bugs": {
+    "url": "https://github.com/itokun99/react-blogger-api/issues"
+  },
   "publishConfig": {
     "access": "public"
   },
