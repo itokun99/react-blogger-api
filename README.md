@@ -1,5 +1,9 @@
 # react-blogger-api
 
+[![npm version](https://img.shields.io/npm/v/react-blogger-api.svg)](https://www.npmjs.com/package/react-blogger-api)
+[![npm downloads](https://img.shields.io/npm/dm/react-blogger-api.svg)](https://www.npmjs.com/package/react-blogger-api)
+[![license](https://img.shields.io/npm/l/react-blogger-api.svg)](./LICENSE)
+
 Fully-typed React hooks and a Context provider for Google's [Blogger API v3](https://developers.google.com/blogger/docs/3.0/getting_started).
 
 Written in TypeScript under `strict` + `exactOptionalPropertyTypes`, with Zod-validated responses at the network boundary and a small built-in query cache. Zero config required beyond an API key.
