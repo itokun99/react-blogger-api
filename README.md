@@ -12,6 +12,8 @@ Written in TypeScript under `strict` + `exactOptionalPropertyTypes`, with Zod-va
 - **Typed end to end** — every method has typed params and a Zod-validated response type
 - **Cache with invalidation** — mutations automatically invalidate the queries they affect
 - **Fetch-free tests** — inject a `fetch` implementation; every hook is fully testable offline
+- **Axios adapter** — optional `httpClient: "axios"` alternative to the default `ky`
+- **TanStack Query adapter** — swap the built-in cache for React Query via `BloggerTanstackProvider`
 - **Small footprint** — 56 KB ESM bundle; `react`, `ky`, and `zod` stay external
 
 ## Install
@@ -21,7 +23,7 @@ bun add react-blogger-api
 # or: npm install react-blogger-api
 ```
 
-Requires React 18+ (React 19 supported) and any modern browser or runtime with `fetch`.
+Requires React 18+ (React 19 supported), any modern browser or runtime with `fetch`, and either `ky` (default) or `axios` (optional). For TanStack Query integration, install `@tanstack/react-query` separately.
 
 ## Quick start
 
@@ -233,6 +235,44 @@ Pass a custom `fetch` to keep tests offline and deterministic:
 </BloggerProvider>
 ```
 
+## HTTP client adapter
+
+The library ships with a `ky`-based HTTP client by default, but also supports `axios` as an optional peer dependency:
+
+```tsx
+import { createBloggerClient } from "react-blogger-api"
+
+const client = createBloggerClient({
+  apiKey: "YOUR_API_KEY",
+  httpClient: "axios", // or "ky" (default)
+})
+```
+
+## TanStack Query integration
+
+Optionally, you can swap the built-in cache for TanStack Query. This gives you access to React Query's background refetching, caching strategies, and devtools:
+
+```tsx
+import { QueryClient } from "@tanstack/react-query"
+import { BloggerTanstackProvider, usePosts } from "react-blogger-api"
+
+const queryClient = new QueryClient()
+
+function App() {
+  return (
+    <QueryClientProvider client={queryClient}>
+      <BloggerTanstackProvider
+        config={{ apiKey: "YOUR_API_KEY", queryClient }}
+      >
+        <PostList />
+      </BloggerTanstackProvider>
+    </QueryClientProvider>
+  )
+}
+```
+
+The same hooks work unchanged — `usePosts`, `useBlog`, etc. The only difference is the cache is now managed by TanStack Query instead of the built-in store.
+
 ## TypeScript
 
 All types are exported: resource types (`Post`, `Page`, `Comment`, `Blog`, `User`, `Pageviews`), list types (`PostList`, `PageList`, `CommentList`, `BlogList`), per-hook param types (`UsePostsParams`, `CreatePostArgs`, and so on), param enums (`POST_STATUSES`, `VIEW_TYPES`, …), and error types (`BloggerApiError`, `BloggerParseError`).
@@ -266,7 +306,7 @@ try {
 
 ```sh
 bun install
-bun test          # 171 tests
+bun test          # 179 tests
 bun run typecheck # tsc --noEmit
 bun run lint      # biome check
 bun run build     # bundle + type declarations into dist/
